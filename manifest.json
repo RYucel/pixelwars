@@ -1,19 +1,19 @@
 {
     "name": "Pixel Rally Chaos",
     "short_name": "Rally Chaos",
-    "description": "A pixel-art KKTC election battle game!",
-    "start_url": "index.html",
+    "description": "A pixel-art election battle game!",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#000000",
     "theme_color": "#000000",
     "icons": [
         {
-            "src": "icon.png",
+            "src": "/assets/images/icon.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "icon-512.png",
+            "src": "/assets/images/icon-512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
