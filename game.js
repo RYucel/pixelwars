@@ -28,10 +28,10 @@ const popSound = document.getElementById("pop-sound");
 const cheersSound = document.getElementById("cheers-sound");
 const loseSound = document.getElementById("lose-sound");
 bgMusic.volume = 0.3;
-countdownVoice.volume = 0.7;
-popSound.volume = 0.5;
-cheersSound.volume = 0.6;
-loseSound.volume = 0.6;
+countdownVoice.volume = 0.8;
+popSound.volume = 0.6;
+cheersSound.volume = 0.7;
+loseSound.volume = 0.7;
 
 // Game State
 let playerParty = null;
