@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Rally Chaos - UBP vs CTP</title>
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="A pixel-art election battle game!">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="assets/images/icon.png">
+    <link rel="apple-touch-icon" href="assets/images/icon.png">
+    <!-- Pixel Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Press Start 2P', cursive; }
+        #scoreboard {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #scoreboard img {
+            width: 32px;
+            height: 32px;
+        }
+        #timer-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 60px;
+            text-shadow: 2px 2px 4px #000;
+            transition: transform 0.2s;
+        }
+        #name-input, #intro-screen, #party-select {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            max-width: 400px;
+        }
+        #name-input h2, #intro-screen h2, #party-select h2 {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+        #name-input input {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+        #party-select button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+        }
+        #party-select img {
+            width: 48px;
+            height: 48px;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+        #intro-screen p {
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        #intro-screen button, #name-input button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            text-align: center;
+        }
+        #high-scores {
+            color: white;
+            font-size: 12px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreboard">
+        <span>Hits: <span id="hit-count">0</span> / 50</span>
+        <img src="assets/images/ubp-logo.png" alt="UBP Logo">
+        <span id="ubp-score">0</span>
+        <img src="assets/images/ctp-logo.png" alt="CTP Logo">
+        <span id="ctp-score">0</span>
+    </div>
+    <div id="timer-display">60</div>
+    <div id="name-input">
+        <h2>Adınızı Girin</h2>
+        <input type="text" id="player-name" maxlength="10" placeholder="Oyuncu">
+        <button id="start-btn">Başla</button>
+    </div>
+    <div id="intro-screen" style="display: none;">
+        <h2>Nasıl Oynanır?</h2>
+        <p>50 rakip partiliyi vurarak kazan!<br>
+        Kendi partilini vurursan veya süre biterse kaybedersin.<br>
+        Fare ile tıkla ve vur!</p>
+        <button id="continue-btn">Devam Et</button>
+    </div>
+    <div id="party-select" style="display: none;">
+        <h2>Partini Seç!</h2>
+        <button id="ubp-btn"><img src="assets/images/ubp-logo.png" alt="UBP"> UBP (Turuncu)</button>
+        <button id="ctp-btn"><img src="assets/images/ctp-logo.png" alt="CTP"> CTP (Yeşil)</button>
+    </div>
+    <div id="game-over">
+        <button id="restart-btn" style="margin-top: 20px; padding: 10px 20px; font-family: 'Press Start 2P', cursive;">Yeniden Başla</button>
+        <div id="high-scores"></div>
+    </div>
+    <!-- Audio Elements -->
+    <audio id="bg-music" loop>
+        <source src="assets/audio/bg-music.wav" type="audio/wav">
+    </audio>
+    <audio id="countdown-voice">
+        <source src="assets/audio/countdown-voice.wav" type="audio/wav">
+    </audio>
+    <audio id="pop-sound">
+        <source src="assets/audio/pop-sound.mp3" type="audio/mp3">
+    </audio>
+    <audio id="cheers-sound">
+        <source src="assets/audio/cheers-sound.ogg" type="audio/ogg">
+    </audio>
+    <audio id="lose-sound">
+        <source src="assets/audio/lose-sound.mp3" type="audio/mp3">
+    </audio>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="game.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('Service Worker Registered'))
+                .catch(err => console.error('Service Worker Error:', err));
+        }
+    </script>
+</body>
+</html>
